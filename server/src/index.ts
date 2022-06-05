@@ -1,3 +1,4 @@
+import databaseConfig from '../config/database.config';
 import app from './app';
 
-connection
+databaseConfig.initialize().then(() => console.log('opened'));
