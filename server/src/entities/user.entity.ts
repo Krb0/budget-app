@@ -19,9 +19,6 @@ export class User {
   @Column({ unique: true, nullable: true })
   refreshtoken?: string;
 
-  @Column({ unique: true, nullable: true })
-  acesstoken?: string;
-
   @Column()
   @Exclude()
   password!: string;
