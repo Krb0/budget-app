@@ -28,7 +28,11 @@ export class UserService {
       });
       if (user) {
         const verification = await verify(user.password, password);
-        if (verification) return user;
+        if (verification) {
+          const [at, rt] = this.getTokens(user.id, user.email);
+          await this.updateRt(user.id, rt);
+          return { accessToken: at };
+        }
       }
     }
     return null;
@@ -54,15 +58,30 @@ export class UserService {
     return [at, rt];
   }
   async updateRt(userId: number, rt: string) {
-    const hashedRt = await hash(rt);
     const user = await this.repo.findOne({
       where: {
         id: userId,
       },
     });
     if (user) {
+      const hashedRt = await hash(rt);
       user.refreshtoken = hashedRt;
       await this.repo.save(user);
+    }
+  }
+  async refresh(userId: number, rt: string) {
+    const user = await this.repo.findOne({
+      where: {
+        id: userId,
+      },
+    });
+    if (user) {
+      const verification = await verify(user.refreshtoken!, rt);
+      if (verification) {
+        const [at, rt] = this.getTokens(user.id, user.email);
+        await this.updateRt(user.id, rt);
+        return [at, rt];
+      }
     }
   }
 }
