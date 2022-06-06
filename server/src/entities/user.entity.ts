@@ -15,7 +15,10 @@ export class User {
 
   @Column({ unique: true })
   email!: string;
-
+  @Column({ unique: true })
+  refreshtoken!: string;
+  @Column({ unique: true })
+  acesstoken?: string;
   @Column()
   @Exclude()
   password!: string;
