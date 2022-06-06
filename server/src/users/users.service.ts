@@ -6,13 +6,11 @@ export class UserService {
   async register({ email, password }: Partial<User>) {
     try {
       if (email && password) {
-        if (email.length > 7 && password.length >= 8) {
-          const repo = database.getRepository(User);
-          const hashedPass = await hash(password);
-          const user = repo.create({ email, password: hashedPass });
-          await repo.save(user);
-          return user;
-        }
+        const repo = database.getRepository(User);
+        const hashedPass = await hash(password);
+        const user = repo.create({ email, password: hashedPass });
+        await repo.save(user);
+        return user;
       }
     } catch (err) {
       return null;
