@@ -1,19 +1,18 @@
 import { hash, verify } from 'argon2';
-import database from '../../config/database.config';
 import { User } from '../entities/user.entity';
+import { Repository } from 'typeorm';
 import jwt from 'jsonwebtoken';
+
 export class UserService {
-  constructor(private repo = database.getRepository(User)) {}
+  constructor(private repo: Repository<User>) {}
   async register({ email, password }: Partial<User>) {
     try {
-      if (email && password) {
-        const hashedPass = await hash(password);
-        const newUser = this.repo.create({ email, password: hashedPass });
-        const user = await this.repo.save(newUser);
-        const [at, rt] = this.getTokens(user.id, user.email);
-        await this.updateRt(user.id, rt);
-        return { accessToken: at, refreshToken: rt };
-      }
+      const hashedPass = await hash(password!);
+      const newUser = this.repo.create({ email, password: hashedPass });
+      const user = await this.repo.save(newUser);
+      const [at, rt] = this.getTokens(user.id, user.email);
+      await this.updateRt(user.id, rt);
+      return { accessToken: at };
     } catch (err) {
       console.log(err);
       return null;

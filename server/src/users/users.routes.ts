@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import database from '../../config/database.config';
+import { User } from '../entities/user.entity';
 import dtoMiddleware from '../middlewares/dto.middleware';
 import { CreateUserDTO, LoginUserDTO } from './dtos';
 import { UserController } from './users.controller';
@@ -7,7 +9,9 @@ import { UserService } from './users.service';
 
 const UsersRoute = Router();
 
-const controller = new UserController(new UserService());
+const controller = new UserController(
+  new UserService(database.getRepository(User))
+);
 
 UsersRoute.post(
   '/register',
