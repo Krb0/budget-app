@@ -1,12 +1,19 @@
-import bodyParser from 'body-parser';
+import { Application } from 'express';
 import express from 'express';
-import UsersRoute from './users/users.routes';
-import cors from 'cors';
 
-const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cors());
-app.use('/users', UsersRoute);
-export default app;
-    
+class App {
+  public app: Application;
+  constructor(middlewares: any[], routes: any[]) {
+    this.app = express();
+    this.middlewares(middlewares);
+    this.routes(routes);
+  }
+  middlewares(arr: any[]) {
+    arr.forEach((middleware) => this.app.use(middleware));
+  }
+  routes(arr: any[]) {
+    arr.forEach((route) => this.app.use(...route));
+  }
+}
+
+export default App;
