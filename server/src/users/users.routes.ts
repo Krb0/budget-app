@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Request, Router } from 'express';
 import database from '../../config/database.config';
 import { User } from '../entities/user.entity';
 import dtoMiddleware from '../middlewares/dto.middleware';
@@ -23,5 +23,6 @@ UsersRoute.post(
   dtoMiddleware(LoginUserDTO),
   controller.login.bind(controller)
 );
+UsersRoute.get('/', controller.getAuth.bind(controller));
 
 export default UsersRoute;

@@ -30,12 +30,39 @@ export class UserService {
         if (verification) {
           const [at, rt] = this.getTokens(user.id, user.email);
           await this.updateRt(user.id, rt);
-          return { accessToken: at };
+          return { token: rt };
         }
       }
     }
     return null;
   }
+  async getAuth(authorization: string) {
+    try {
+      const verification = jwt.verify(authorization, process.env.RT_SECRET!);
+
+      if (!verification.sub) return;
+      const sub = parseInt(verification.sub.toString());
+      const user = await this.repo.findOne({
+        where: {
+          id: sub,
+        },
+      });
+      const hashVerification = await verify(
+        user?.refreshtoken ? user.refreshtoken : '--',
+        authorization
+      );
+      if (hashVerification && user) {
+        const tokens = await this.refresh(user.id, authorization);
+        return tokens
+          ? { user: { email: user.email }, token: tokens[1] }
+          : null;
+      }
+    } catch (e) {
+      return null;
+    }
+    return null;
+  }
+
   getTokens(userId: number, email: string): any {
     const at = jwt.sign(
       {

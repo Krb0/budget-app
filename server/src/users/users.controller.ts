@@ -19,4 +19,13 @@ export class UserController {
       ? res.status(200).json(user)
       : res.status(400).json({ message: 'Invalid credentials' });
   }
+  async getAuth(req: Request, res: Response) {
+    const header = req.get('Authorization')?.split('Bearer ')[1];
+    if (header) {
+      const response = await this.user.getAuth(header);
+      res.send(response ? { data: response } : { data: null });
+      return;
+    }
+    res.send(header ? { header } : { data: null });
+  }
 }
