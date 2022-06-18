@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from '../../../../assets/card.png';
 import Arrow from '../../../../assets/arrow.svg';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -18,19 +19,22 @@ const Hero = () => {
           <p className="text-[1.15rem] text-[#535354] ">
             Meet the only spend management <br /> platform and corporate card.
           </p>
-          <button className="flex items-center gap-3 group hover:bg-[#333] transition-colors duration-500 pr-4 w-fit ">
+          <Link
+            to="/dashboard"
+            className="flex items-center gap-3 group hover:bg-[#333] transition-colors duration-500 pr-4 w-fit "
+          >
             <span className="bg-[#222223] p-2 ">
               <img src={Arrow} className="h-6 w-5" />
             </span>
             <span className="font-[500] group-hover:text-white ">
               Get your card
             </span>
-          </button>
+          </Link>
         </div>
       </div>
-      <div className="flex flex-[1.5] justify-start ">
+      <div className="hidden xl:flex lg:flex-[1.5] justify-start   ">
         <div className="w-[85%]  ">
-          <img src={Card} className="w-full h-full min-w-[600px] " />
+          <img src={Card} className="w-full h-full min-w-[500px] " />
         </div>
       </div>
     </main>

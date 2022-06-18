@@ -1,32 +1,16 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
-import { useDispatch, useSelector } from 'react-redux';
-import Loading from '../components/Loading';
-import { useCookies } from 'react-cookie';
-
-const Home = () => {
-  const user = useSelector((state: any) => state.user);
-  const { auth, logout, loading } = useAuth();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!auth && !loading) {
-      navigate('/login');
-    }
-  }, [auth, loading, user]);
-
-  if (loading) return <div>loading...</div>;
+import React from 'react';
+import Navbar from '../modules/Home/components/Navbar';
+import Hero from '../modules/Home/components/Hero';
+import Item from '../assets/item.svg';
+import Ellipse from '../assets/ellipse.svg';
+import Features from '../modules/Home/components/Features';
+import Home from '../modules/Home/Home';
+const HomePage = () => {
   return (
-    <div>
-      <h1>{JSON.stringify(user)}</h1>
-      <button
-        className="bg-blue-500 p-4 text-white rounded-md "
-        onClick={() => logout()}
-      >
-        Sign out
-      </button>
+    <div className="bg-[#F8F8F8]">
+      <Home />
     </div>
   );
 };
 
-export default Home;
+export default HomePage;

@@ -18,7 +18,7 @@ const Form = ({ login }: { login?: boolean }) => {
   const [form, setForm] = useState(0);
   useEffect(() => {
     if (data && cookies.token) {
-      navigate('/');
+      navigate('/dashboard');
     }
   }, [data, cookies]);
   return (
