@@ -1,6 +1,6 @@
 import React from 'react';
-import Card from '../../assets/card.png';
-import Arrow from '../../assets/arrow.svg';
+import Card from '../../../../assets/card.png';
+import Arrow from '../../../../assets/arrow.svg';
 
 const Hero = () => {
   return (

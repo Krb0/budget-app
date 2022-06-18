@@ -1,5 +1,5 @@
-import ShoppingBag from '../../assets/shopping-bag (1) 1.svg';
-import Besnik from '../../assets/Besnik.svg';
+import ShoppingBag from '../../../../assets/shopping-bag.svg';
+import Besnik from '../../../../assets/logo.svg';
 
 const Navbar = () => {
   return (
